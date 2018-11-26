@@ -9,7 +9,6 @@ These are:
 
 #All imports
 import csv
-from nltk import pos_tag
 from nltk import classify
 from nltk import NaiveBayesClassifier
 import FeatureExtractor as fm
@@ -36,11 +35,12 @@ if __name__ == '__main__':
 		
 		tweet[0] = tweet[0][1:-1]
 		tweet[1] = tweet[1][1:-1]
-		tweet[1] = cleanTweet(tweet[1])
+		tweet[1] = fm.cleanTweet(tweet[1])
 		
-		output = naiveBayes.classify(extractUnigramFeatures(tweet[1].split()))
+		output = naiveBayes.classify(fm.extractUnigramFeatures(tweet[1].split()))
 		
 		if output == tweet[0]:
 			i += 1
 		c += 1
 	print float(i*1.0/c)
+	print naiveBayes.show_most_informative_features(5)

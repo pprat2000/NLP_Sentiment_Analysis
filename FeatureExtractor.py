@@ -11,6 +11,7 @@ These are:
 #All imports
 import re
 import csv
+from nltk import pos_tag
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
 
@@ -81,13 +82,24 @@ def computeWordDict():
 
 def extractUnigramFeatures(tweet):
 	features = dict()
-	wordsInTweet = set(tweet)
+	wordsInTweet = list(set(tweet))
+	posTag = pos_tag(wordsInTweet)
 
 	for eachWord in wordList:
 		if eachWord in wordsInTweet:
 			features[eachWord] = 1
 		else:
 			features[eachWord] = 0
+
+	return features
+
+def extractUnigram_POSFeatures(tweet):
+	features = extractUnigramFeatures(tweet)
+	wordsInTweet = list(set(tweet))
+	posTag = pos_tag(wordsInTweet)
+
+	for word,tag in posTag:
+		features[tag] = 1
 	
 	return features
 #computeWordDict()
